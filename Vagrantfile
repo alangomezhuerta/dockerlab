@@ -13,9 +13,12 @@ Vagrant.configure("2") do |config|
 		vm1.vm.provision "shell", inline: <<-SHELL
 			yum update -y
 		SHELL
-		vm1.vm.provision "shell", run: "always", inline: <<-SHELL
-			iptables -F
-		SHELL
+		#vm1.vm.provision "shell", run: "always", inline: <<-SHELL
+		#	iptables -F
+		#SHELL
+		vm1.vm.provision "ansible" do | ansible |
+			ansible.playbook = "playbook.yml"
+		end
 	end
 
 	config.vm.define "vm2" do |vm2|
