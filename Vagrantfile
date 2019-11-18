@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 		#vm1.vm.provision "shell", run: "always", inline: <<-SHELL
 		#	iptables -F
 		#SHELL
-		vm1.vm.provision "ansible" do | ansible |
+		vm1.vm.provision "ansible", run: "always" do | ansible |
 			ansible.playbook = "playbook.yml"
 		end
 	end
