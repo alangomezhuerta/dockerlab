@@ -1,0 +1,9 @@
+---
+- hosts:	centos
+  become:	yes
+  tasks:
+  - name:  Ensure ntpd is installed
+    yum: name=ntp	state=present
+  - name:  Ensure ntp is running
+    service: name=ntpd state=started enabled=yes
+
