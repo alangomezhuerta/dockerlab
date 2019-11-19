@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
 		end
 		vm1.vm.provision "shell", inline: <<-SHELL
 			yum update -y
+			iptables -F
 		SHELL
 		#vm1.vm.provision "shell", run: "always", inline: <<-SHELL
 		#	iptables -F
