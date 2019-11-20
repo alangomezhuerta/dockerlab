@@ -1,0 +1,28 @@
+ansible dbservers -a "cat /etc/sudoers" -b
+ansible centos -b -m yum -a "name=ntp state=latest"  
+ansible centos -b -m service -a "name=ntpd state=started enabled=yes"
+ansible centos -b -m group -a "name=admin state=present"
+ansible vms -b -m user -a "name=johndoe group=admin createhome=yes"
+ansible vms -b -m user -a "name=johndoe state=absent remove=yes"
+ansible vms -b -m package -a "name=git state=present"
+ansible vms -m stat -a "path=/etc/environment"
+ansible vms -m copy -a "scr=/etc/hosts dest=/tmp/hosts"
+
+
+
+
+ansible centos -b -m stat -a "path=/etc/sudoers"    # gives statistics about file or dir
+ansible centos -b -m fetch -a "src=/etc/hosts dest=/tmp"    # similar to copy but 'al reves', copia del nodo al host y hace una estructura en este caso del tipo /tmp/nodename/etc/host
+ansible centos -m file -a "dest=/tmp/test mode=644 state=directory"     # Creates a directory
+ansible centos -m file -a "src=/tmp/test dest=/tmp/tst state=link"  # Creates a simlink
+ansible centos -m file -a "dest=/tmp/test state=absent" # remove a file
+
+#Running processes in background
+
+-B [seconds]  # The number of seconds to let the job running
+-P [seconds]    # The amount of time to wait between polling the servers from an updated job status
+
+ansible centos -b -B 3600 -P 0 -a "yum -y update"   # running the process yum in background
+ansible centos -b -m async_status -a "jid=999786381584.4710" # in this case you can check the info of the job since real time monitoring is not provided
+
+# Check log files 
